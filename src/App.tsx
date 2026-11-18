@@ -292,9 +292,20 @@ export default function App() {
               })}
             </div>
 
-            <div className="board-wrap">
+            <div className={`board-wrap${paused ? " is-paused" : ""}`}>
               {generating ? <div className="loading">Generating easy puzzle…</div> : null}
               {won ? <div className="win">Puzzle solved</div> : null}
+              {paused ? (
+                <button
+                  type="button"
+                  className="pause-overlay"
+                  onClick={() => setPaused(false)}
+                  aria-label="Resume game"
+                >
+                  <span className="pause-overlay-blur" aria-hidden="true" />
+                  <span className="pause-overlay-label">Paused</span>
+                </button>
+              ) : null}
               <div className="board" role="grid" aria-label="Sudoku board">
                 {board.map((value, index) => {
                   const row = Math.floor(index / SIZE)
@@ -343,7 +354,7 @@ export default function App() {
                       className={className}
                       role="gridcell"
                       aria-selected={isSelected}
-                      disabled={generating}
+                      disabled={generating || paused}
                       onClick={() => {
                         setSelected(index)
                         const cellValue = board[index]

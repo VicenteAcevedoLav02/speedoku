@@ -53,6 +53,50 @@
   min-width: 0;
 }
 
+.board-wrap.is-paused .board {
+  filter: blur(14px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.pause-overlay {
+  appearance: none;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: transparent;
+  font: inherit;
+}
+
+.pause-overlay-blur {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(18px) saturate(0.7);
+  -webkit-backdrop-filter: blur(18px) saturate(0.7);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.pause-overlay-label {
+  position: relative;
+  z-index: 1;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(52, 72, 97, 0.92);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .digit-progress {
   display: flex;
   flex-direction: column;
