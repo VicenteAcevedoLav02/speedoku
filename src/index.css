@@ -13,14 +13,20 @@ body,
 
 html,
 body {
+  margin: 0;
   overflow: hidden;
 }
 
 body {
-  margin: 0;
   background: #ffffff;
   color: #344861;
   font-family: "Segoe UI", Arial, sans-serif;
+}
+
+button,
+h1,
+p {
+  font-family: inherit;
 }
 
 @media (max-width: 900px) {
@@ -28,10 +34,4 @@ body {
   body {
     overflow: auto;
   }
-}
-
-button,
-h1,
-p {
-  font-family: inherit;
 }

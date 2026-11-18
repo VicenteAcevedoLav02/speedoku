@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react"
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FormEvent,
+} from "react"
 import {
   insertRecord,
   loadRecords,
@@ -18,7 +25,7 @@ import {
 } from "./sudoku"
 import "./App.css"
 
-const HOLD_RESET_MS = 2000
+const HOLD_RESET_MS = 1000
 
 function formatTime(totalSeconds: number): string {
   const minutes = Math.floor(totalSeconds / 60)
@@ -444,7 +451,18 @@ export default function App() {
                 <span className="pause-overlay-label">Paused</span>
               </button>
             ) : null}
-            <div className="board" role="grid" aria-label="Sudoku board">
+            <div
+              className={`board-frame${holdReset > 0 ? " is-holding" : ""}`}
+              style={
+                holdReset > 0
+                  ? ({ "--hold-progress": holdReset } as CSSProperties)
+                  : undefined
+              }
+            >
+              {holdReset > 0 ? (
+                <div className="hold-ring" aria-hidden="true" />
+              ) : null}
+              <div className="board" role="grid" aria-label="Sudoku board">
               {board.map((value, index) => {
                 const row = Math.floor(index / SIZE)
                 const col = index % SIZE
@@ -505,6 +523,7 @@ export default function App() {
                   </button>
                 )
               })}
+              </div>
             </div>
           </div>
 
@@ -560,20 +579,13 @@ export default function App() {
 
             <button
               type="button"
-              className={`new-game${holdReset > 0 ? " holding" : ""}`}
+              className="new-game"
               onClick={newGame}
               disabled={generating}
-              style={
-                holdReset > 0
-                  ? {
-                      background: `linear-gradient(90deg, #2a4f9a ${holdReset * 100}%, #325aaf ${holdReset * 100}%)`,
-                    }
-                  : undefined
-              }
             >
               New Game
             </button>
-            <p className="hold-hint">Hold R 2s to reset</p>
+            <p className="hold-hint">Hold R 1s to reset</p>
           </div>
 
           <div className="tools">
@@ -623,7 +635,7 @@ export default function App() {
                 onChange={(event) => setShowMistakes(event.target.checked)}
               />
               <span className="switch-ui" aria-hidden="true" />
-              <span>Show mistakes in red</span>
+              <span>Mistakes in red</span>
             </label>
             <label className="help-switch">
               <input
@@ -632,7 +644,7 @@ export default function App() {
                 onChange={(event) => setLineHelp(event.target.checked)}
               />
               <span className="switch-ui" aria-hidden="true" />
-              <span>Show lines for every matching number</span>
+              <span>Matching number lines</span>
             </label>
             <label className="help-switch">
               <input
@@ -641,7 +653,7 @@ export default function App() {
                 onChange={(event) => setBoxHelp(event.target.checked)}
               />
               <span className="switch-ui" aria-hidden="true" />
-              <span>Highlight 3×3 boxes that already have it</span>
+              <span>Filled 3×3 boxes</span>
             </label>
           </div>
         </aside>
