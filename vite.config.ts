@@ -1,9 +1,9 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
+// Relative base so assets resolve under /speedoku/ on GitHub Pages
+// and also when opening nested paths.
 export default defineConfig({
-  // Project Pages URL: https://vicenteacevedolav02.github.io/speedoku/
-  base: process.env.VITE_BASE ?? '/speedoku/',
+  base: './',
   plugins: [react()],
 })

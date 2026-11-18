@@ -2,12 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>speedoku</title>
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <title>SPEEDOKU</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #ffffff;
+        color: #344861;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+      #boot-fallback {
+        display: none;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+      #boot-fallback.visible {
+        display: block;
+      }
+      #boot-fallback h1 {
+        margin: 0 0 0.5rem;
+        color: #325aaf;
+        letter-spacing: 0.08em;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div id="boot-fallback" aria-live="polite">
+      <h1>SPEEDOKU</h1>
+      <p>Loading failed. Hard-refresh with Ctrl+F5, or open the link again.</p>
+    </div>
+    <script>
+      window.setTimeout(function () {
+        var root = document.getElementById("root")
+        var fallback = document.getElementById("boot-fallback")
+        if (root && fallback && root.childElementCount === 0) {
+          fallback.className = "visible"
+        }
+      }, 2500)
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
